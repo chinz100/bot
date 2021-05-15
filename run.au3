@@ -17,7 +17,9 @@ $cleamcapcha  = @ScriptDir & "\cleamcapcha.bmp"
 $selectbot  = @ScriptDir & "\selectbot.bmp"
 $apporve  = @ScriptDir & "\apporve.bmp"
 $gohome  = @ScriptDir & "\gohome.bmp"
+$cleaminhome  = @ScriptDir & "\cleaminhome.bmp"
 $minehome  = @ScriptDir & "\minehome.bmp"
+$closealert  = @ScriptDir & "\closealert.bmp"
 
 $alert = "\alert.mp3"
 ;~ Local $capchawin = WinGetHandle("WAX Cloud Wallet - Google Chrome");
@@ -32,8 +34,18 @@ WEnd
 Func _start()
     
     While 1
-        Sleep(1000)
+    Sleep(1000)
+
     Local $handle = WinGetHandle("Alien Worlds - Google Chrome")
+
+    Local $R_closealert = _ImageSearch($closealert)
+    If $R_closealert[0] = 1 Then
+        MouseMove($R_closealert[1],$R_closealert[2],1)
+        ControlClick($handle, "", "", "left", 1, $R_closealert[1], $R_closealert[2])
+        If $Mouse_Move_On_Found Then
+			Sleep($iSleep_Time)
+		EndIf
+    EndIf
 
     Local $R_gohome = _ImageSearch($gohome)
     If $R_gohome[0] = 1 Then
@@ -46,6 +58,17 @@ Func _start()
 
     Sleep(200)
 
+    
+    Local $R_cleaminhome = _ImageSearch($cleaminhome)
+    If $R_cleaminhome[0] = 1 Then
+        MouseMove($R_cleaminhome[1],$R_cleaminhome[2],1)
+        ControlClick($handle, "", "", "left", 1, $R_cleaminhome[1], $R_cleaminhome[2])
+        If $Mouse_Move_On_Found Then
+			Sleep($iSleep_Time)
+		EndIf
+    EndIf
+    Sleep(200)
+
     Local $R_minehome = _ImageSearch($minehome)
     If $R_minehome[0] = 1 Then
         MouseMove($R_minehome[1],$R_minehome[2],1)
@@ -56,7 +79,8 @@ Func _start()
     EndIf
     Sleep(200)
 
-    WinMove($handle,"",2200,0,900,600)
+    ;~ WinMove($handle,"",2200,0,900,600)
+    WinMove($handle,"",0,0,900,600)
     Local $return = _ImageSearch($bmine)
     ;~ MouseMove($return[1],$return[2])
     If $return[0] = 1 Then
@@ -82,8 +106,8 @@ Func _start()
     Sleep(200)
 
     Local $handlecapcha = WinGetHandle("WAX Cloud Wallet - Google Chrome");
-    WinMove($handlecapcha,"",1900,0,547,786)
-
+    ;~ WinMove($handlecapcha,"",1900,0,547,786)
+    WinMove($handlecapcha,"",0,0,547,786)
     Local $R_selectbot = _ImageSearch($selectbot)
     If $R_selectbot[0] = 1 Then
         MouseMove($R_selectbot[1],$R_selectbot[2],1)

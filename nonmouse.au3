@@ -17,6 +17,7 @@ $selectbot  = @ScriptDir & "\selectbot.bmp"
 $apporve  = @ScriptDir & "\apporve.bmp"
 $gohome  = @ScriptDir & "\gohome.bmp"
 $minehome  = @ScriptDir & "\minehome.bmp"
+$alertgooglecapha  = @ScriptDir & "\alertgooglecapha.bmp"
 
 $alert = "\alert.mp3"
 ;~ Local $capchawin = WinGetHandle("WAX Cloud Wallet - Google Chrome");
@@ -80,8 +81,8 @@ Func _start()
     ;~ Sleep(200)
 
     Local $handlecapcha = WinGetHandle("WAX Cloud Wallet - Google Chrome");
-    WinMove($handlecapcha,"",1923,0,547,786)
-
+    ;~ WinMove($handlecapcha,"",1923,0,547,786)
+    WinMove($handlecapcha,"",0,0,547,786)
     Local $R_selectbot = _ImageSearch($selectbot)
     If $R_selectbot[0] = 1 Then
         SoundPlay(@ScriptDir & $alert, 1)
@@ -102,6 +103,22 @@ Func _start()
 		EndIf
     EndIf
     Sleep(200)
+
+    Local $R_alertgooglecapha = _ImageSearch($alertgooglecapha)
+    If $R_alertgooglecapha[0] = 1 Then
+        SoundPlay(@ScriptDir & $alert, 1)
+        SoundPlay(@ScriptDir & $alert, 1)
+        SoundPlay(@ScriptDir & $alert, 1)
+        SoundPlay(@ScriptDir & $alert, 1)
+        ;~ MouseMove($R_apporve[1],$R_apporve[2],1)
+        ;~ ControlClick($handlecapcha, "", "", "left", 1, $R_alertgooglecapha[1], $R_alertgooglecapha[2])
+        If $Mouse_Move_On_Found Then
+			Sleep($iSleep_Time)
+		EndIf
+    EndIf
+    Sleep(200)
+
+    
 
 
     WEnd
