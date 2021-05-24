@@ -1,4 +1,6 @@
-function makeid(length) {
+var customdelay = 20 * 1000;
+
+function x1sec(length) {
   var result = "";
   var characters = "123456789";
   var charactersLength = characters.length;
@@ -6,6 +8,19 @@ function makeid(length) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
+}
+function x10sec(length) {
+  var result = "";
+  var characters = "6789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+function sleep(ts) {
+  return new Promise((resolve) => setTimeout(resolve, ts));
 }
 
 class TLMBot {
@@ -40,10 +55,11 @@ class TLMBot {
       }
       try {
         await bot.mine();
-        await TLMBot.delay(5000)
+        await sleep(5000)
       } catch (err) {
         console.log(`%c[Bot] mine Err`, "color:red");
-        await TLMBot.delay(20000)
+        await sleep(20000)
+        return;
       }
       
       
@@ -93,9 +109,9 @@ You earn ${this.accumulate} TLM in total.
           console.log(`%c[Bot] Cooldown finished.`, "color:green");
           resolve();
         } else {
-          let ManualDelay =  `1${makeid(4)}`;
-          const waitTime = parseInt(mineDelay) + parseInt(this.getRandomTimeWait()) + parseInt(this.getRandomTimeWait(ManualDelay));
-          console.log(waitTime);
+          let ManualDelay =  `${x10sec(1)}${x1sec(4)}`;
+          const waitTime = parseInt(mineDelay) + parseInt(this.getRandomTimeWait()) + parseInt(this.getRandomTimeWait(ManualDelay)) + parseInt(customdelay);
+
           let converttime = Math.ceil(waitTime / 1000) || "NaN";
           console.log(converttime === "NaN");
           if (converttime === "NaN") {
@@ -104,6 +120,10 @@ You earn ${this.accumulate} TLM in total.
           } else {
             console.log(
               `%c[Bot] Cooldown for ${converttime} seconds`,
+              "color:green"
+            );
+            console.log(
+              `%c[Bot] Cooldown for ${converttime/60} Min`,
               "color:green"
             );
             TLMBot.delay(waitTime).then((_) => {
